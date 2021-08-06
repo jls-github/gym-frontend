@@ -1,13 +1,14 @@
 import "./App.css";
 import GymContainer from "./components/GymContainer";
-import GymDetails from './components/GymDetails'
+import GymDetails from "./components/GymDetails";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import NavBar from "./components/NavBar";
 
 function App() {
   return (
     <Router>
-      <div>
+      <div className="app-container">
+        <div className="app-background" />
         <NavBar />
         <Switch>
           <Route exact path="/">

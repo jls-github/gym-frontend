@@ -6,6 +6,7 @@ import GymMemberForm from "./GymMemberForm.js";
 
 export default function GymDetails() {
   const [gym, setGym] = useState(null);
+  const [selectedFocus, setSelectedFocus] = useState("ALL")
 
   const { id } = useParams();
 
@@ -15,9 +16,26 @@ export default function GymDetails() {
       .then((json) => setGym(json));
   }, [id]);
 
-  useEffect(() => {
-    console.log(gym);
-  }, [gym]);
+  function uniqueFocuses() {
+    const focuses = gym.gym_members.map(gymMember => gymMember.focus)
+    const uniqueFocuses = [...new Set(focuses)];
+    return uniqueFocuses
+  }
+
+  function populateFocusOptions() {
+      return uniqueFocuses().map(focus => <option value={focus}>{focus}</option>)
+  }
+
+  function filteredGymMembers() {
+    if (selectedFocus === "ALL") {
+        return gym.gym_members
+    }
+    return gym.gym_members.filter(gymMember => gymMember.focus === selectedFocus)
+  }
+
+  function handleSelectFocus(e) {
+      setSelectedFocus(e.target.value)
+  } 
 
   function createGymMember(gymMemberDetails) {
     const newGymMember = {
@@ -43,7 +61,11 @@ export default function GymDetails() {
           <p>Gym Name: {gym.name}</p>
           <p>Gym Location: {gym.location}</p>
           <h3>Gym Members</h3>
-          {gym.gym_members.map((gymMember) => (
+          <select value={selectedFocus} onChange={handleSelectFocus}>
+              <option value="ALL">All Focuses</option>
+              {populateFocusOptions()}
+          </select>
+          {filteredGymMembers().map((gymMember) => (
             <GymMember gymMember={gymMember} />
           ))}
           <h3>Add new Gym Member</h3>
