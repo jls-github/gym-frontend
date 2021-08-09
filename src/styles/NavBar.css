@@ -6,7 +6,7 @@
     justify-content: space-around;
     align-items: center;
     border-bottom: 1px solid black;
-    box-shadow: 1px 5px 5px black;
+    box-shadow: 1px 1px 5px black;
 }
 
 .navbar a {
