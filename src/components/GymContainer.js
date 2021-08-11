@@ -17,8 +17,9 @@ export default function GymContainer() {
 
   function populateGyms() {
     console.log(gyms);
-    return gyms.map((gym) => (
-      <Gym gym={gym} deleteGym={deleteGym} updateGym={updateGym} key={gym.id} />
+    return gyms.map((gym, idx) => (
+      // <Gym gym={gym} deleteGym={deleteGym} updateGym={updateGym} key={gym.id} initialDelay={idx * 500}/>
+      <Gym gym={gym} deleteGym={deleteGym} updateGym={updateGym} key={gym.id}/>
     ));
   }
 

@@ -3,10 +3,12 @@ import { useParams } from "react-router-dom";
 import { BASE_URL } from "../constraints/index.js";
 import GymMember from "./GymMember.js";
 import GymMemberForm from "./GymMemberForm.js";
+import '../styles/GymDetails.css'
+import StarRating from "./StarRating.js";
 
 export default function GymDetails() {
   const [gym, setGym] = useState(null);
-  const [selectedFocus, setSelectedFocus] = useState("ALL")
+  const [selectedFocus, setSelectedFocus] = useState("ALL");
 
   const { id } = useParams();
 
@@ -17,25 +19,29 @@ export default function GymDetails() {
   }, [id]);
 
   function uniqueFocuses() {
-    const focuses = gym.gym_members.map(gymMember => gymMember.focus)
+    const focuses = gym.gym_members.map((gymMember) => gymMember.focus);
     const uniqueFocuses = [...new Set(focuses)];
-    return uniqueFocuses
+    return uniqueFocuses;
   }
 
   function populateFocusOptions() {
-      return uniqueFocuses().map(focus => <option value={focus}>{focus}</option>)
+    return uniqueFocuses().map((focus) => (
+      <option value={focus}>{focus}</option>
+    ));
   }
 
   function filteredGymMembers() {
     if (selectedFocus === "ALL") {
-        return gym.gym_members
+      return gym.gym_members;
     }
-    return gym.gym_members.filter(gymMember => gymMember.focus === selectedFocus)
+    return gym.gym_members.filter(
+      (gymMember) => gymMember.focus === selectedFocus
+    );
   }
 
   function handleSelectFocus(e) {
-      setSelectedFocus(e.target.value)
-  } 
+    setSelectedFocus(e.target.value);
+  }
 
   function createGymMember(gymMemberDetails) {
     const newGymMember = {
@@ -60,14 +66,17 @@ export default function GymDetails() {
         <>
           <p>Gym Name: {gym.name}</p>
           <p>Gym Location: {gym.location}</p>
+          <StarRating />
           <h3>Gym Members</h3>
           <select value={selectedFocus} onChange={handleSelectFocus}>
-              <option value="ALL">All Focuses</option>
-              {populateFocusOptions()}
+            <option value="ALL">All Focuses</option>
+            {populateFocusOptions()}
           </select>
-          {filteredGymMembers().map((gymMember) => (
-            <GymMember gymMember={gymMember} />
-          ))}
+          <div className="card-container  ">
+            {filteredGymMembers().map((gymMember) => (
+              <GymMember gymMember={gymMember} />
+            ))}
+          </div>
           <h3>Add new Gym Member</h3>
           <GymMemberForm createGymMember={createGymMember} />
         </>

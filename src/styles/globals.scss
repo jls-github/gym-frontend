@@ -1,0 +1,51 @@
+/* p {
+    color: red;
+}
+
+@media (min-width: 576px) {
+    p {
+        color: black
+    }
+} */
+
+$tablet: 576px;
+$desktop: 900px;
+$large-desktop: 1200px;
+
+.card {
+    margin: 1rem;
+    padding: 1rem;
+    border: 1px solid black;
+    width: 80vw;
+    min-height: 15vh;
+    background-color: bisque;
+    animation: fade-in 1000ms ease-in-out;
+}
+
+@media (min-width: $tablet) {
+    .card {
+        width: 25vw;
+    }
+}
+
+@media (min-width: $large-desktop) {
+    .card {
+        width: 15vw;
+    }
+}
+
+.card-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+
+@keyframes fade-in {
+    /* 0% { margin-right: -20; opacity: 0.5 }
+    80% { margin-right: 0; opacity: 0.5}
+    100% {opacity: 1} */
+
+    from {opacity: 0}
+    to {opacity: 1}
+}

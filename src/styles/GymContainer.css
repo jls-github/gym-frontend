@@ -1,8 +1,15 @@
 .gym-container {
     display: flex;
     flex-wrap: wrap;
+    justify-content: center;
 }
 
 .gyms-header {
     text-align: center;
 }
+/* 
+@media (min-width: 576px) {
+    .gyms-header {
+        display: none;
+    }
+} */

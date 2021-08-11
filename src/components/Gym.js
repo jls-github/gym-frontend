@@ -1,10 +1,16 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import "../styles/Gym.css"
 
-export default function Gym({ gym, deleteGym, updateGym }) {
+export default function Gym({ gym, deleteGym, updateGym, initialDelay=0 }) {
   const [newGym, setNewGym] = useState({ ...gym });
   const [editMode, setEditMode] = useState(false);
+  const [render, setRender] = useState(false)
+
+  useEffect(() => {
+    const timeout = setTimeout(() => {setRender(true)}, initialDelay)
+    return () => clearTimeout(timeout)
+  }, [initialDelay])
 
   function handleChange(e) {
     const updatedValue = { ...newGym };
@@ -22,8 +28,12 @@ export default function Gym({ gym, deleteGym, updateGym }) {
     setEditMode(false);
   }
 
+  if (!render) {
+    return <></>
+  }
+
   return (
-    <div className="gym-card">
+    <div className="card">
       <Link to={`/gyms/${gym.id}`}>
         <p>{gym.name}</p>
       </Link>
